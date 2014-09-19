@@ -12,20 +12,9 @@
   X_test <- read.table("UCI HAR Dataset/test/X_test.txt", col.names=features[,2])
   subject_test <- read.table("UCI HAR Dataset/test/subject_test.txt", col.names = "Subject")
   
-  ##print(row.names(Y_test))
-  ##print(row.names(X_test))
-  ##print(row.names(subject_test))
-  
-  
-  ##Add Activity Column
-  
-  ##print(length(X_test))
-  ##Adding X_test
+  ##Adding Activity and Subject
   X_test <- cbind(subject_test,Y_test,X_test)
-  ##print(length(X_test))
   
-  
-  ##col.names = features,
   
   X_train <-read.table("UCI HAR Dataset/train/X_train.txt", col.names=features[,2])
   Y_train <-read.table("UCI HAR Dataset/train/Y_train.txt",col.names = "Activity")
@@ -35,15 +24,33 @@
   
   ##Add Activity Column
   
-  ##merge sets
+  ##1 Merges the training and the test sets to create one data set.
   
   total_set <- merge(X_test,X_train,all=TRUE)
   ##print(length(total_set))
   ##print(names(total_set[560:562]))
   
   ##Extract names that have means & st.deviations
+  ##2 Extracts only the measurements on the mean and standard deviation for each measurement. 
   
   total_set <- total_set[grepl("Mean|std|mean|Subject|Activity", names( total_set ))]
+  
+
+  
+  ##3 Uses descriptive activity names to name the activities in the data set
+  
+  
+  ##Rename activities
+  total_set$Activity <- as.character(total_set$Activity)
+  total_set$Activity[total_set$Activity == "1"] <- "WALKING"
+  total_set$Activity[total_set$Activity == "2"] <- "WALKING_UPSTAIRS"
+  total_set$Activity[total_set$Activity == "3"] <- "WALKING_DOWNSTAIRS"
+  total_set$Activity[total_set$Activity == "4"] <- "SITTING"
+  total_set$Activity[total_set$Activity == "5"] <- "STANDING"
+  total_set$Activity[total_set$Activity == "6"] <- "LAYING"
+  
+  
+  ##4 Appropriately labels the data set with descriptive variable names. 
   
   ##Rename columns
   
@@ -51,7 +58,6 @@
   ##t is time domain, only if first letter
   ##Acc is Acceleration
   ##Mag is Magnitude
-  
   names(total_set) <- sub("^t", "TimeDomain", names(total_set))
   names(total_set) <- sub("^f","FourierTransform",names(total_set))
   names(total_set) <- sub("Acc","Acceleration", names(total_set))
@@ -67,27 +73,14 @@
   names(total_set) <- sub("\\.\\.","",names(total_set))
   names(total_set) <- sub("\\.","",names(total_set))
   names(total_set) <- sub("anglet","TimeDomainAngle",names(total_set))
-  
-  ##print(names(total_set))
-  
-  ##Rename activities
-  total_set$Activity <- as.character(total_set$Activity)
-  total_set$Activity[total_set$Activity == "1"] <- "WALKING"
-  total_set$Activity[total_set$Activity == "2"] <- "WALKING_UPSTAIRS"
-  total_set$Activity[total_set$Activity == "3"] <- "WALKING_DOWNSTAIRS"
-  total_set$Activity[total_set$Activity == "4"] <- "SITTING"
-  total_set$Activity[total_set$Activity == "5"] <- "STANDING"
-  total_set$Activity[total_set$Activity == "6"] <- "LAYING"
-  
+
   ## Melt Set
   
   setMelt <- melt(total_set,id=c("Activity","Subject"))
   
   ##Cast Set taking averages - HURRAY!
+  ##From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
   
   casted_set <- dcast(setMelt, Activity + Subject ~ variable,mean)
   
-  ##print(total_set$Activity[4000:4200])
-  ##Calculate average for each activity and each subject
-
   
