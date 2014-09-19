@@ -1,4 +1,4 @@
-datasciencecoursera
+README for Tidy Data Set
 ===================
 
 <Before the assignment>
