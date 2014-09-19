@@ -35,9 +35,7 @@
   
   total_set <- total_set[grepl("Mean|std|mean|Subject|Activity", names( total_set ))]
   
-
-  
-  ##3 Uses descriptive activity names to name the activities in the data set
+  ##3 Uses descriptive activity names to name the activities in the data set.
   
   
   ##Rename activities
