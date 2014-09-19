@@ -7,10 +7,10 @@
   ##Import the first data set
   ##X test is the test set, Y test is the Activity
   
-  features <- read.table("Development/Tidy Data/UCI HAR Dataset/features.txt")
-  Y_test <- read.table("Development/Tidy Data/UCI HAR Dataset/test/Y_test.txt",col.names = "Activity")
-  X_test <- read.table("Development/Tidy Data/UCI HAR Dataset/test/X_test.txt", col.names=features[,2])
-  subject_test <- read.table("Development/Tidy Data/UCI HAR Dataset/test/subject_test.txt", col.names = "Subject")
+  features <- read.table("UCI HAR Dataset/features.txt")
+  Y_test <- read.table("UCI HAR Dataset/test/Y_test.txt",col.names = "Activity")
+  X_test <- read.table("UCI HAR Dataset/test/X_test.txt", col.names=features[,2])
+  subject_test <- read.table("UCI HAR Dataset/test/subject_test.txt", col.names = "Subject")
   
   ##print(row.names(Y_test))
   ##print(row.names(X_test))
@@ -27,9 +27,9 @@
   
   ##col.names = features,
   
-  X_train <-read.table("Development/Tidy Data/UCI HAR Dataset/train/X_train.txt", col.names=features[,2])
-  Y_train <-read.table("Development/Tidy Data/UCI HAR Dataset/train/Y_train.txt",col.names = "Activity")
-  subject_train <-read.table("Development/Tidy Data/UCI HAR Dataset/train/subject_train.txt",col.names = "Subject")
+  X_train <-read.table("UCI HAR Dataset/train/X_train.txt", col.names=features[,2])
+  Y_train <-read.table("UCI HAR Dataset/train/Y_train.txt",col.names = "Activity")
+  subject_train <-read.table("UCI HAR Dataset/train/subject_train.txt",col.names = "Subject")
   
   X_train <- cbind(subject_train,Y_train,X_train)
   
